@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Host
+Host: https://rendafacil.br
+
+# Sitemaps
+Sitemap: https://rendafacil.br/sitemap.xml
