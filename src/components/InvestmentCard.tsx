@@ -29,13 +29,6 @@ export default function InvestmentCard({ investment }: InvestmentCardProps) {
         {investment.description}
       </p>
 
-      <div className="flex items-center justify-between text-sm mb-4">
-        <span className="text-gray-600 dark:text-gray-400">Taxa sugerida:</span>
-        <span className="font-semibold text-primary-600 dark:text-primary-400">
-          {investment.defaultRate}% a.m.
-        </span>
-      </div>
-
       <Link
         href={`/simulador?type=${investment.id}`}
         className="btn-primary w-full text-center block"
