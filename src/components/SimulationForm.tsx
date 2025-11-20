@@ -237,7 +237,7 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 <GlossaryTooltip term="Dividend Yield" definition="Rendimento mensal pago por cota em %">
-                  Dividend Yield (% a.m.)
+                  Dividend Yield (% a.a.)
                 </GlossaryTooltip>
               </label>
               <input
@@ -247,6 +247,21 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                 className="input-field"
                 min="0"
                 step="0.01"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <GlossaryTooltip term="Valorização" definition="Quanto você espera que a cota valorize ao ano">
+                  Valorização Esperada (% a.a.)
+                </GlossaryTooltip>
+              </label>
+              <input
+                type="number"
+                value={appreciationRate}
+                onChange={(e) => setAppreciationRate(Number(e.target.value))}
+                className="input-field"
+                min="0"
+                step="0.1"
               />
             </div>
             <div>
@@ -280,21 +295,6 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
               <p className="text-xs text-gray-500 mt-1">
                 Aporte: R$ {(monthlyShares * sharePrice).toLocaleString('pt-BR')}
               </p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                <GlossaryTooltip term="Valorização" definition="Quanto você espera que a cota valorize ao ano">
-                  Valorização Esperada (% a.a.)
-                </GlossaryTooltip>
-              </label>
-              <input
-                type="number"
-                value={appreciationRate}
-                onChange={(e) => setAppreciationRate(Number(e.target.value))}
-                className="input-field"
-                min="0"
-                step="0.1"
-              />
             </div>
           </div>
         </div>
