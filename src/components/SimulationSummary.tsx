@@ -47,51 +47,51 @@ export default function SimulationSummary({
       animate={{ opacity: 1, y: 0 }}
       className="card"
     >
-      <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+      <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6">
         Resumo da Simulação
       </h3>
 
       {/* -------- PRIMEIRA PESSOA: PERGUNTAS CHAVE DO INVESTIDOR -------- */}
-      <div className="mb-6 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-        <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 font-medium">
+      <div className="mb-4 md:mb-6 p-3 md:p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+        <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300 mb-2 md:mb-3 font-medium">
           Aqui está o que você realmente quer saber:
         </p>
 
         {/* 1. Rendimento futuro / Proventos (FII) */}
-        <div className="mb-3">
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <div className="mb-2 md:mb-3">
+          <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
             {isFII
               ? '📌 1. Quanto devo receber por mês de proventos?'
               : '📌 1. Se eu deixar esse dinheiro aplicado depois disso, quanto rende por mês?'}
           </p>
-          <p className="font-bold text-gray-900 dark:text-gray-100 text-lg">
+          <p className="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             {formatCurrency(rendimentoMensalFuturo)}
           </p>
         </div>
 
         {/* 2. Lucro líquido */}
-        <div className="mb-3">
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <div className="mb-2 md:mb-3">
+          <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
             📌 2. Quanto eu ganhei neste período simulando aportes?
           </p>
-          <p className="font-bold text-gray-900 dark:text-gray-100 text-lg">
+          <p className="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             {formatCurrency(result.profitLiquid)}
           </p>
         </div>
 
         {/* 3. Rentabilidade total */}
         <div>
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
             📌 3. Isso deu quanto de rentabilidade?
           </p>
-          <p className="font-bold text-gray-900 dark:text-gray-100 text-lg">
+          <p className="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             {((result.profitLiquid / result.totalInvested) * 100).toFixed(2)}%
           </p>
         </div>
       </div>
 
       {/* -------- BLOCO PRINCIPAL -------- */}
-      <div className="mb-6 bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
+      <div className="mb-4 md:mb-6 bg-indigo-50 dark:bg-indigo-900/20 p-3 md:p-4 rounded-lg border border-indigo-100 dark:border-indigo-800">
         <div className="flex items-center justify-between">
           <div>
             {isFII ? (
@@ -115,54 +115,54 @@ export default function SimulationSummary({
             )}
           </div>
 
-          <p className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">
+          <p className="text-xl md:text-2xl font-bold text-indigo-700 dark:text-indigo-300">
             {formatCurrency(rendimentoMensalFuturo)}
           </p>
         </div>
       </div>
 
       {/* -------- MÉTRICAS FINANCEIRAS -------- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div className="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+      <div className="grid grid-cols-2 md:grid-cols-2 gap-2 md:gap-4 mb-4 md:mb-6">
+        <div className="bg-primary-50 dark:bg-primary-900/20 p-2 md:p-4 rounded-lg">
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">
             Valor Final Total
           </p>
-          <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+          <p className="text-lg md:text-2xl font-bold text-primary-600 dark:text-primary-400">
             {formatCurrency(result.total)}
           </p>
         </div>
 
-        <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+        <div className="bg-green-50 dark:bg-green-900/20 p-2 md:p-4 rounded-lg">
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">
             Lucro Líquido
           </p>
-          <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+          <p className="text-lg md:text-2xl font-bold text-green-600 dark:text-green-400">
             {formatCurrency(result.profitLiquid)}
           </p>
         </div>
 
-        <div className="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+        <div className="bg-gray-50 dark:bg-gray-700/50 p-2 md:p-4 rounded-lg">
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">
             Total Investido
           </p>
-          <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          <p className="text-base md:text-xl font-semibold text-gray-900 dark:text-gray-100">
             {formatCurrency(result.totalInvested)}
           </p>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+        <div className="bg-blue-50 dark:bg-blue-900/20 p-2 md:p-4 rounded-lg">
+          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">
             Rentabilidade Total
           </p>
-          <p className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+          <p className="text-base md:text-xl font-semibold text-blue-600 dark:text-blue-400">
             {((result.profitLiquid / result.totalInvested) * 100).toFixed(2)}%
           </p>
         </div>
       </div>
 
       {/* -------- RENDIMENTO MÉDIO -------- */}
-      <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-        <div className="flex items-center justify-between text-sm mb-2">
+      <div className="border-t border-gray-200 dark:border-gray-700 pt-3 md:pt-4">
+        <div className="flex items-center justify-between text-xs md:text-sm mb-1.5 md:mb-2">
           <span className="text-gray-600 dark:text-gray-400">
             Lucro Médio Mensal (na simulação):
           </span>
@@ -171,7 +171,7 @@ export default function SimulationSummary({
           </span>
         </div>
 
-        <div className="flex items-center justify-between text-sm mb-2">
+        <div className="flex items-center justify-between text-xs md:text-sm mb-1.5 md:mb-2">
           <span className="text-gray-600 dark:text-gray-400">
             Lucro Médio por Ano:
           </span>
@@ -181,7 +181,7 @@ export default function SimulationSummary({
         </div>
 
         {type && type.irType === 'regressivo' && (
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-between text-xs md:text-sm">
             <span className="text-gray-600 dark:text-gray-400">
               IR Descontado:
             </span>
@@ -193,8 +193,8 @@ export default function SimulationSummary({
       </div>
 
       {type && type.irType === 'regressivo' && (
-        <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between text-sm">
+        <div className="mt-3 md:mt-4 p-2 md:p-3 bg-gray-50 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between text-xs md:text-sm">
             <span className="text-gray-600 dark:text-gray-400">
               Alíquota IR (estimada):
             </span>

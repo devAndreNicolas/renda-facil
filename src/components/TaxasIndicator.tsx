@@ -123,7 +123,7 @@ export default function TaxasIndicator() {
   });
 
   return (
-    <div className="relative bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg p-4 mb-6 overflow-hidden">
+    <div className="relative bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg p-2 md:p-4 mb-4 md:mb-6 overflow-hidden">
       {particlesInit && (
         <Particles
           id="tsparticles"
@@ -132,38 +132,38 @@ export default function TaxasIndicator() {
         />
       )}
       <div className="relative z-10">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <div className="flex items-center space-x-2">
-            <span className="text-lg">📊</span>
-            <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-              Taxas atualizadas em tempo real
+        <div className="flex items-center justify-between flex-wrap gap-1 md:gap-2 mb-2 md:mb-0">
+          <div className="flex items-center space-x-1 md:space-x-2">
+            <span className="text-base md:text-lg">📊</span>
+            <span className="text-xs md:text-sm font-semibold text-gray-900 dark:text-gray-100">
+              Taxas atualizadas
             </span>
           </div>
-          <span className="text-xs text-gray-500 dark:text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-gray-500 hidden md:inline">
             Atualizado em: {dataFormatada}
           </span>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-3">
+        <div className="grid grid-cols-3 gap-2 md:gap-4 mt-2 md:mt-3">
           <div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">CDI</p>
-            <p className="text-lg font-bold text-primary-600 dark:text-primary-400">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">CDI</p>
+            <p className="text-base md:text-lg font-bold text-primary-600 dark:text-primary-400">
               {taxas.cdi.toFixed(2)}% <span className="text-xs">a.a.</span>
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Selic</p>
-            <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">Selic</p>
+            <p className="text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">
               {taxas.selic.toFixed(2)}% <span className="text-xs">a.a.</span>
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">IPCA</p>
-            <p className="text-lg font-bold text-green-600 dark:text-green-400">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-0.5 md:mb-1">IPCA</p>
+            <p className="text-base md:text-lg font-bold text-green-600 dark:text-green-400">
               {taxas.ipca.toFixed(2)}% <span className="text-xs">a.m.</span>
             </p>
           </div>
         </div>
-        <p className="text-xs text-gray-500 dark:text-gray-500 mt-3">
+        <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 md:mt-3 hidden md:block">
           Fonte: Banco Central do Brasil (BCB)
         </p>
       </div>

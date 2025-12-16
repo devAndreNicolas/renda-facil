@@ -180,24 +180,27 @@ export default function SimuladorTipo() {
       />
 
       <div className="max-w-7xl mx-auto">
-        {/* Header com título específico */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+        {/* Header com título específico - Compacto no mobile */}
+        <div className="text-center mb-4 md:mb-8">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2 md:mb-4">
             Simulador de {investmentType.icon} {investmentType.name}
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-sm md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-2">
             {investmentType.description}
           </p>
         </div>
 
-        <TaxasIndicator />
+        {/* Taxas Indicator - Compacto no mobile */}
+        <div className="mb-4 md:mb-6">
+          <TaxasIndicator />
+        </div>
 
         {/* Layout Principal: Formulário à esquerda, Resultados à direita */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-4 md:mb-8">
           {/* Coluna Esquerda - Formulário */}
           <div className="lg:col-span-1">
-            <div className="card sticky top-24">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+            <div className="card sticky top-20 lg:top-24">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6">
                 Parâmetros da Simulação
               </h2>
               <SimulationForm
@@ -206,14 +209,14 @@ export default function SimuladorTipo() {
               />
             </div>
 
-            {/* Simulações Salvas */}
-            <div className="mt-6">
+            {/* Simulações Salvas - Oculto no mobile para economizar espaço */}
+            <div className="hidden lg:block mt-4 lg:mt-6">
               <SavedSimulations onSelectSimulation={handleSelectSimulation} />
             </div>
           </div>
 
           {/* Coluna Direita - Resultados e Gráficos */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
             {result ? (
               <>
                 {/* Resultados em Destaque */}
@@ -226,7 +229,7 @@ export default function SimuladorTipo() {
                   />
                   <button
                     onClick={handleSave}
-                    className="btn-secondary w-full mt-4"
+                    className="btn-secondary w-full mt-3 md:mt-4 text-sm md:text-base py-2 md:py-3"
                   >
                     💾 Salvar Simulação
                   </button>
@@ -262,20 +265,20 @@ export default function SimuladorTipo() {
                 <FeaturedBook />
               </>
             ) : (
-              <div className="card text-center py-12 bg-gray-50 dark:bg-gray-800/50">
-                <div className="text-6xl mb-4">📊</div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                  Preencha o formulário ao lado
+              <div className="card text-center py-6 md:py-12 bg-gray-50 dark:bg-gray-800/50">
+                <div className="text-4xl md:text-6xl mb-2 md:mb-4">📊</div>
+                <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 md:mb-2">
+                  Preencha o formulário acima
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Configure os parâmetros da simulação e veja os resultados aqui
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 px-2">
+                  Configure os parâmetros e veja os resultados aqui
                 </p>
               </div>
             )}
 
             {/* Banner após formulário (quando não há resultados) */}
             {!result && afterFormBanners.length > 0 && (
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {afterFormBanners.map((affiliate) => (
                   <AffiliateBanner key={affiliate.id} affiliate={affiliate} />
                 ))}

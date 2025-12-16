@@ -166,11 +166,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
 
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4 md:space-y-6">
       {/* Settings Toggle */}
-      <div className="flex items-center justify-between gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Modo:</span>
+      <div className="flex items-center justify-between gap-2 md:gap-4 p-2 md:p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center gap-1 md:gap-2">
+          <span className="text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300">Modo:</span>
           <button
             type="button"
             onClick={() => setIsSimpleMode(!isSimpleMode)}
@@ -182,7 +182,7 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                 } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
             />
           </button>
-          <span className="text-xs text-gray-500">{isSimpleMode ? 'Simples' : 'Avançado'}</span>
+          <span className="text-xs text-gray-500 hidden sm:inline">{isSimpleMode ? 'Simples' : 'Avançado'}</span>
         </div>
       </div>
 
@@ -204,12 +204,12 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
 
       {/* FII Specific Inputs */}
       {investmentType?.hasShareInputs ? (
-        <div className="space-y-4 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+        <div className="space-y-3 md:space-y-4 p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 className="text-sm md:text-base font-medium text-gray-900 dark:text-white flex items-center gap-2">
             📊 Dados do Fundo (Manual)
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Preço da Cota (R$)
@@ -384,9 +384,9 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
       {/* Rate Input Section - Hidden in Simple Mode if not FII */}
       {
         (!isSimpleMode || investmentType?.hasShareInputs) && (
-          <div className="p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div className="p-3 md:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700">
             {investmentType?.id === 'CDB' || investmentType?.id === 'LCI' || investmentType?.id === 'LCA' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     <GlossaryTooltip term="Taxa CDI" definition="Taxa básica de juros da economia (semelhante à Selic)">
@@ -438,7 +438,7 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                 </div>
               </div>
             ) : investmentType?.id === 'TESOURO_IPCA' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     <GlossaryTooltip term="IPCA" definition="Índice oficial de inflação no Brasil">

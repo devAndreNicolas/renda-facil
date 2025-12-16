@@ -112,12 +112,12 @@ export default function ChartComponent({ data, viewMode, onViewModeChange }: Cha
 
   return (
     <div className="card">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Evolução do Investimento</h3>
-        <div className="flex space-x-2">
+      <div className="flex items-center justify-between mb-2 md:mb-4">
+        <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100">Evolução do Investimento</h3>
+        <div className="flex space-x-1 md:space-x-2">
           <button
             onClick={() => onViewModeChange('month')}
-            className={`px-3 py-1 rounded text-sm ${
+            className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm ${
               viewMode === 'month'
                 ? 'bg-primary-600 text-white'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
@@ -127,7 +127,7 @@ export default function ChartComponent({ data, viewMode, onViewModeChange }: Cha
           </button>
           <button
             onClick={() => onViewModeChange('semester')}
-            className={`px-3 py-1 rounded text-sm ${
+            className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm ${
               viewMode === 'semester'
                 ? 'bg-primary-600 text-white'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
@@ -137,7 +137,7 @@ export default function ChartComponent({ data, viewMode, onViewModeChange }: Cha
           </button>
           <button
             onClick={() => onViewModeChange('year')}
-            className={`px-3 py-1 rounded text-sm ${
+            className={`px-2 md:px-3 py-1 rounded text-xs md:text-sm ${
               viewMode === 'year'
                 ? 'bg-primary-600 text-white'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'

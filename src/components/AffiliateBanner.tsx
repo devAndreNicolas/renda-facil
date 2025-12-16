@@ -17,11 +17,11 @@ export default function AffiliateBanner({
   const getVariantStyles = () => {
     switch (variant) {
       case 'compact':
-        return 'p-4';
+        return 'p-3 md:p-4';
       case 'large':
-        return 'p-6';
+        return 'p-4 md:p-6';
       default:
-        return 'p-5';
+        return 'p-3 md:p-5';
     }
   };
 
@@ -47,16 +47,16 @@ export default function AffiliateBanner({
       className={`bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 border-2 border-primary-200 dark:border-primary-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ${getVariantStyles()} ${className}`}
     >
       <Link href={affiliate.url} {...linkProps} className="block">
-        <div className="flex items-start gap-4">
-          <div className="text-4xl flex-shrink-0">{getIcon()}</div>
+        <div className="flex items-start gap-2 md:gap-4">
+          <div className="text-3xl md:text-4xl flex-shrink-0">{getIcon()}</div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-gray-100 mb-1 md:mb-2">
               {affiliate.title}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2 md:mb-4 line-clamp-2 md:line-clamp-none">
               {affiliate.description}
             </p>
-            <span className="inline-block bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-primary-700 transition-colors">
+            <span className="inline-block bg-primary-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-primary-700 transition-colors">
               {affiliate.buttonText || 'Saiba Mais →'}
             </span>
           </div>

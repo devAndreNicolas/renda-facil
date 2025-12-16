@@ -36,8 +36,8 @@ export default function SavedSimulations({ onSelectSimulation, onDeleteSimulatio
 
   if (simulations.length === 0) {
     return (
-      <div className="card text-center py-8">
-        <p className="text-gray-600 dark:text-gray-400">
+      <div className="card text-center py-4 md:py-8">
+        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
           Nenhuma simulação salva ainda. Salve suas simulações para compará-las depois!
         </p>
       </div>
@@ -48,9 +48,9 @@ export default function SavedSimulations({ onSelectSimulation, onDeleteSimulatio
     <div className="card">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between text-left mb-4"
+        className="w-full flex items-center justify-between text-left mb-2 md:mb-4"
       >
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100">
           Minhas Simulações ({simulations.length})
         </h3>
         <span className="text-primary-600 dark:text-primary-400">
@@ -64,7 +64,7 @@ export default function SavedSimulations({ onSelectSimulation, onDeleteSimulatio
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="space-y-3 overflow-hidden"
+            className="space-y-2 md:space-y-3 overflow-hidden"
           >
             {simulations.map((sim) => {
               const type = getInvestmentType(sim.type);
@@ -73,7 +73,7 @@ export default function SavedSimulations({ onSelectSimulation, onDeleteSimulatio
                   key={sim.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600"
+                  className="p-2 md:p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
