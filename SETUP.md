@@ -75,7 +75,7 @@ O sitemap será gerado automaticamente após o build.
 ### Variáveis de Ambiente
 Crie um arquivo `.env.local`:
 ```
-SITE_URL=https://rendafacil.br
+SITE_URL=https://rendecerto.com.br
 NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-SEU-ID
 NEXT_PUBLIC_GA_ID=G-SEU-ID
 ```

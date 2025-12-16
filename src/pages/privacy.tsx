@@ -4,9 +4,9 @@ export default function Privacy() {
   return (
     <>
       <NextSeo
-        title="Política de Privacidade - RendaFácil"
-        description="Política de privacidade do RendaFácil. Saiba como protegemos seus dados."
-        canonical="https://rendafacil.br/privacy"
+        title="Política de Privacidade - RendeCerto"
+        description="Política de privacidade do RendeCerto. Saiba como protegemos seus dados."
+        canonical="https://rendecerto.com.br/privacy"
         noindex
       />
 
@@ -21,7 +21,7 @@ export default function Privacy() {
               1. Informações Coletadas
             </h2>
             <p>
-              O RendaFácil coleta apenas informações armazenadas localmente no seu navegador através do
+              O RendeCerto coleta apenas informações armazenadas localmente no seu navegador através do
               localStorage. Não coletamos dados pessoais identificáveis, como nome, e-mail ou informações
               de pagamento.
             </p>

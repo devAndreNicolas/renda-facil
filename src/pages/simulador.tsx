@@ -1,182 +1,140 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
-import SimulationForm from '@/components/SimulationForm';
-import SimulationSummary from '@/components/SimulationSummary';
-import ChartComponent from '@/components/ChartComponent';
-import SavedSimulations from '@/components/SavedSimulations';
+import Link from 'next/link';
+import { investmentTypes } from '@/lib/investments';
+import InvestmentCard from '@/components/InvestmentCard';
 import AdSlot from '@/components/AdSlot';
 import TaxasIndicator from '@/components/TaxasIndicator';
-import { calculateInvestmentReturn } from '@/lib/calculation';
-import { getInvestmentType } from '@/lib/investments';
-import { saveSimulation, SavedSimulation } from '@/lib/storage';
-import { CalculationResult } from '@/lib/calculation';
+import AffiliateBanner from '@/components/AffiliateBanner';
+import { getAffiliateLinksForPosition, adSenseConfig } from '@/config/affiliates';
+
+// Mapeamento de IDs para slugs
+const investmentSlugMap: Record<string, string> = {
+  'FII': 'fii',
+  'LCI': 'lci',
+  'LCA': 'lca',
+  'CDB': 'cdb',
+  'TESOURO_IPCA': 'tesouro-ipca',
+  'POUPANCA': 'poupanca',
+};
 
 export default function Simulador() {
-  const router = useRouter();
-  const [result, setResult] = useState<CalculationResult | null>(null);
-  const [currentType, setCurrentType] = useState<string>('FII');
-  const [currentRate, setCurrentRate] = useState<number>(0.9);
-  const [currentRateType, setCurrentRateType] = useState<'monthly' | 'annual'>('monthly');
-  const [viewMode, setViewMode] = useState<'month' | 'semester' | 'year'>('month');
-  const [currentFormData, setCurrentFormData] = useState<{
-    initial: number;
-    monthly: number;
-    period: number;
-    periodType: 'months' | 'years';
-  } | null>(null);
-
-  useEffect(() => {
-    const { type } = router.query;
-    if (type && typeof type === 'string') {
-      setCurrentType(type);
-    }
-  }, [router.query]);
-
-  const handleSubmit = (data: {
-    type: string;
-    initial: number;
-    monthly: number;
-    rate: number;
-    rateType: 'monthly' | 'annual';
-    period: number;
-    periodType: 'months' | 'years';
-    taxRegime: 'current' | 'mp1303';
-  }) => {
-    const investmentType = getInvestmentType(data.type);
-    if (!investmentType) return;
-
-    const periodInMonths = data.periodType === 'years' ? data.period * 12 : data.period;
-
-    const calculationResult = calculateInvestmentReturn(
-      data.initial,
-      data.monthly,
-      data.rate,
-      data.rateType,
-      periodInMonths,
-      investmentType,
-      data.taxRegime
-    )
-
-    setResult(calculationResult);
-    setCurrentType(data.type);
-    setCurrentRate(data.rate);
-    setCurrentRateType(data.rateType);
-    setCurrentFormData({
-      initial: data.initial,
-      monthly: data.monthly,
-      period: data.period,
-      periodType: data.periodType,
-    });
-  };
-
-  const handleSave = () => {
-    if (!result || !currentFormData) return;
-
-    const formData = {
-      type: currentType,
-      initial: currentFormData.initial,
-      monthly: currentFormData.monthly,
-      rate: currentRate,
-      rateType: currentRateType,
-      period: currentFormData.period,
-      periodType: currentFormData.periodType,
-      result: {
-        total: result.total,
-        totalInvested: result.totalInvested,
-        profit: result.profit,
-        profitLiquid: result.profitLiquid,
-      },
-    };
-
-    saveSimulation(formData);
-    alert('Simulação salva com sucesso!');
-  };
-
-  const handleSelectSimulation = (simulation: SavedSimulation) => {
-    const investmentType = getInvestmentType(simulation.type);
-    if (!investmentType) return;
-
-    const periodInMonths =
-      simulation.periodType === 'years' ? simulation.period * 12 : simulation.period;
-
-    const calculationResult = calculateInvestmentReturn(
-      simulation.initial,
-      simulation.monthly,
-      simulation.rate,
-      simulation.rateType,
-      periodInMonths,
-      investmentType
-    );
-
-    setResult(calculationResult);
-    setCurrentType(simulation.type);
-    setCurrentRate(simulation.rate);
-    setCurrentRateType(simulation.rateType);
-  };
+  // Banners estratégicos para a página hub
+  const headerBanners = getAffiliateLinksForPosition('header', 'simulador');
 
   return (
     <>
       <NextSeo
-        title="Simulador de Rendimentos - RendaFácil"
-        description="Simule rendimentos de investimentos com juros compostos. Calcule FII, LCI, LCA, CDB, Tesouro IPCA+ e mais."
-        canonical="https://rendafacil.br/simulador"
+        title="Simulador de Rendimentos - Escolha seu Investimento | RendeCerto"
+        description="Escolha o tipo de investimento e simule seus rendimentos. FII, LCI, LCA, CDB, Tesouro IPCA+ e Poupança. Calcule juros compostos de forma precisa."
+        canonical="https://rendecerto.com.br/simulador"
+        openGraph={{
+          title: 'Simulador de Rendimentos - RendeCerto',
+          description: 'Simule rendimentos de investimentos com juros compostos. Escolha seu tipo de investimento.',
+          url: 'https://rendecerto.com.br/simulador',
+        }}
       />
 
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
-          Simulador de Rendimentos
-        </h1>
+        {/* Hero Section */}
+        <div className="text-center py-12 mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            Simulador de Rendimentos
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Escolha o tipo de investimento e descubra quanto seu dinheiro pode render com juros compostos
+          </p>
+        </div>
 
         <TaxasIndicator />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div>
-            <div className="card mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                Parâmetros da Simulação
-              </h2>
-              <SimulationForm
-                onSubmit={handleSubmit}
-                defaultValues={{ type: currentType }}
-              />
-            </div>
-
-            <SavedSimulations onSelectSimulation={handleSelectSimulation} />
+        {/* Banners no topo (se configurados) */}
+        {headerBanners.length > 0 && (
+          <div className="mb-8 space-y-4">
+            {headerBanners.map((affiliate) => (
+              <AffiliateBanner key={affiliate.id} affiliate={affiliate} />
+            ))}
           </div>
-
-          <div>
-            {result && (
-              <>
-                <SimulationSummary
-                  result={result}
-                  investmentType={currentType}
-                  rate={currentRate}
-                  rateType={currentRateType}
-                />
-                <button
-                  onClick={handleSave}
-                  className="btn-secondary w-full mt-4"
-                >
-                  💾 Salvar Simulação
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-
-        {result && (
-          <>
-            <AdSlot position="banner" className="my-8" />
-            <ChartComponent
-              data={result}
-              viewMode={viewMode}
-              onViewModeChange={setViewMode}
-            />
-          </>
         )}
+
+        {/* AdSense Banner */}
+        {adSenseConfig.enabled && adSenseConfig.positions.banner && (
+          <AdSlot position="banner" className="my-8" />
+        )}
+
+        {/* Grid de Tipos de Investimento */}
+        <section className="py-8">
+          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-8">
+            Escolha o Tipo de Investimento
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {investmentTypes.map((investment) => {
+              const slug = investmentSlugMap[investment.id];
+              return (
+                <Link
+                  key={investment.id}
+                  href={`/simulador/${slug}`}
+                  className="block transform transition-all duration-300 hover:scale-105"
+                >
+                  <div className="card h-full hover:shadow-xl cursor-pointer">
+                    <div className="text-5xl mb-4 text-center">{investment.icon}</div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 text-center">
+                      {investment.name}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-center mb-4">
+                      {investment.description}
+                    </p>
+                    <div className="mt-4 text-center">
+                      <span className="inline-block bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold text-sm">
+                        Simular {investment.name} →
+                      </span>
+                    </div>
+                    <div className="mt-4 flex justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                      <span>Risco: {investment.riskLevel}</span>
+                      <span>•</span>
+                      <span>{investment.indexador}</span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Informações Adicionais */}
+        <section className="py-12 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 my-8">
+          <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-gray-100 mb-6">
+            Como usar o Simulador
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="text-4xl mb-3">1️⃣</div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                Escolha o Investimento
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Selecione o tipo de investimento que deseja simular
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl mb-3">2️⃣</div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                Preencha os Dados
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Informe valor inicial, aportes mensais e período
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl mb-3">3️⃣</div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                Veja os Resultados
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Analise gráficos e projeções de rendimento
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </>
   );

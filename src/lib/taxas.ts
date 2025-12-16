@@ -10,7 +10,7 @@ interface BCBResponse {
     valor: string;
 }
 
-const CACHE_KEY = 'rendafacil_taxas_cache';
+const CACHE_KEY = 'rendecerto_taxas_cache';
 const CACHE_DURATION = 1000 * 60 * 60 * 24; // 24 hours
 
 async function fetchTaxa(serie: number): Promise<number> {

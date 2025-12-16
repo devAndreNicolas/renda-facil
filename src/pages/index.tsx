@@ -9,14 +9,14 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="RendaFácil - Simulador de Rendimentos de Investimentos"
+        title="RendeCerto - Simulador de Rendimentos de Investimentos"
         description="Simule rendimentos de FII, LCI, LCA, Tesouro IPCA+, CDB e mais. Calcule quanto seu dinheiro pode render com juros compostos."
-        canonical="https://rendafacil.br"
+        canonical="https://rendecerto.com.br"
         openGraph={{
-          url: 'https://rendafacil.br',
-          title: 'RendaFácil - Simulador de Rendimentos',
+          url: 'https://rendecerto.com.br',
+          title: 'RendeCerto - Simulador de Rendimentos',
           description: 'Simule rendimentos de investimentos de forma simples e clara.',
-          siteName: 'RendaFácil',
+          siteName: 'RendeCerto',
         }}
       />
 
@@ -55,7 +55,7 @@ export default function Home() {
         {/* Features */}
         <section className="py-12 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 my-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-8">
-            Por que usar o RendaFácil?
+            Por que usar o RendeCerto?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">

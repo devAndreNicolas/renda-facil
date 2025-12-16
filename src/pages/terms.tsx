@@ -4,9 +4,9 @@ export default function Terms() {
   return (
     <>
       <NextSeo
-        title="Termos de Uso - RendaFácil"
-        description="Termos de uso do RendaFácil. Leia antes de usar nosso simulador."
-        canonical="https://rendafacil.br/terms"
+        title="Termos de Uso - RendeCerto"
+        description="Termos de uso do RendeCerto. Leia antes de usar nosso simulador."
+        canonical="https://rendecerto.com.br/terms"
         noindex
       />
 
@@ -21,7 +21,7 @@ export default function Terms() {
               1. Aceitação dos Termos
             </h2>
             <p>
-              Ao acessar e usar o RendaFácil, você concorda em cumprir e estar vinculado a estes Termos
+              Ao acessar e usar o RendeCerto, você concorda em cumprir e estar vinculado a estes Termos
               de Uso. Se você não concordar com alguma parte destes termos, não deve usar nosso serviço.
             </p>
           </section>
@@ -31,7 +31,7 @@ export default function Terms() {
               2. Natureza do Serviço
             </h2>
             <p>
-              O RendaFácil é uma ferramenta educacional de simulação de rendimentos de investimentos. Os
+              O RendeCerto é uma ferramenta educacional de simulação de rendimentos de investimentos. Os
               resultados apresentados são <strong>estimativas</strong> baseadas em fórmulas matemáticas e
               não constituem garantia de rentabilidade futura.
             </p>
@@ -46,7 +46,7 @@ export default function Terms() {
               3. Limitações de Responsabilidade
             </h2>
             <p>
-              O RendaFácil não se responsabiliza por:
+              O RendeCerto não se responsabiliza por:
             </p>
             <ul className="list-disc list-inside mt-2 space-y-2 ml-4">
               <li>Perdas financeiras decorrentes de decisões baseadas nas simulações</li>
@@ -60,7 +60,7 @@ export default function Terms() {
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
               4. Uso Adequado
             </h2>
-            <p>Você concorda em usar o RendaFácil apenas para fins legais e de forma que não:</p>
+            <p>Você concorda em usar o RendeCerto apenas para fins legais e de forma que não:</p>
             <ul className="list-disc list-inside mt-2 space-y-2 ml-4">
               <li>Viole qualquer lei ou regulamento</li>
               <li>Infrinja direitos de propriedade intelectual</li>
@@ -74,8 +74,8 @@ export default function Terms() {
               5. Propriedade Intelectual
             </h2>
             <p>
-              Todo o conteúdo do RendaFácil, incluindo textos, gráficos, logos e código, é de propriedade
-              do RendaFácil ou de seus licenciadores e está protegido por leis de direitos autorais.
+              Todo o conteúdo do RendeCerto, incluindo textos, gráficos, logos e código, é de propriedade
+              do RendeCerto ou de seus licenciadores e está protegido por leis de direitos autorais.
             </p>
           </section>
 
@@ -85,7 +85,7 @@ export default function Terms() {
             </h2>
             <p>
               Reservamo-nos o direito de modificar, suspender ou descontinuar qualquer aspecto do
-              RendaFácil a qualquer momento, com ou sem aviso prévio.
+              RendeCerto a qualquer momento, com ou sem aviso prévio.
             </p>
           </section>
 
@@ -94,7 +94,7 @@ export default function Terms() {
               7. Isenção de Garantias
             </h2>
             <p>
-              O RendaFácil é fornecido &quot;como está&quot;, sem garantias de qualquer tipo, expressas ou
+              O RendeCerto é fornecido &quot;como está&quot;, sem garantias de qualquer tipo, expressas ou
               implícitas. Não garantimos que o serviço será ininterrupto, seguro ou livre de erros.
             </p>
           </section>

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">RendaFácil</h3>
+            <h3 className="text-white font-bold text-lg mb-4">RendeCerto</h3>
             <p className="text-sm">
               Simulador de rendimentos de investimentos para ajudar você a tomar decisões mais informadas.
             </p>
@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-6 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} RendaFácil. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} RendeCerto. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

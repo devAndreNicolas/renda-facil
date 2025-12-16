@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { adSenseConfig } from '@/config/affiliates';
 
 interface AdSlotProps {
   position: 'banner' | 'in-article' | 'sidebar';
@@ -8,18 +9,29 @@ interface AdSlotProps {
 }
 
 export default function AdSlot({ position, className = '' }: AdSlotProps) {
+  // Verifica se AdSense está habilitado e se a posição está ativa
+  const isEnabled = adSenseConfig.enabled && (
+    (position === 'banner' && adSenseConfig.positions.banner) ||
+    (position === 'in-article' && adSenseConfig.positions.inArticle) ||
+    (position === 'sidebar' && adSenseConfig.positions.sidebar)
+  );
+
   useEffect(() => {
+    if (!isEnabled) return;
+
     // Carregar script do AdSense quando o componente montar
     if (typeof window !== 'undefined' && (window as any).adsbygoogle === undefined) {
       const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX';
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseConfig.clientId}`;
       script.async = true;
       script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
     }
-  }, []);
+  }, [isEnabled]);
 
   useEffect(() => {
+    if (!isEnabled) return;
+
     try {
       if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
         ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
@@ -27,7 +39,7 @@ export default function AdSlot({ position, className = '' }: AdSlotProps) {
     } catch (e) {
       console.error('Erro ao carregar anúncio:', e);
     }
-  }, []);
+  }, [isEnabled]);
 
   const getAdStyle = () => {
     switch (position) {
@@ -42,12 +54,16 @@ export default function AdSlot({ position, className = '' }: AdSlotProps) {
     }
   };
 
+  if (!isEnabled) {
+    return null;
+  }
+
   return (
     <div className={`${getAdStyle()} ${className} flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg`}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client="ca-pub-XXXXXXXXXX"
+        data-ad-client={adSenseConfig.clientId}
         data-ad-slot={`${position}-slot`}
         data-ad-format="auto"
         data-full-width-responsive="true"

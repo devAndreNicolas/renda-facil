@@ -6,7 +6,7 @@ const nextConfig = {
   },
   // Configuração para sitemap
   async generateBuildId() {
-    return 'rendafacil-build'
+    return 'rendecerto-build'
   },
 }
 

@@ -1,7 +1,7 @@
 {
-  "name": "rendafacil",
+  "name": "rendecerto",
   "version": "1.0.0",
-  "description": "Simulador de rendimentos de investimentos - RendaFácil",
+  "description": "Simulador de rendimentos de investimentos - RendeCerto",
   "private": true,
   "scripts": {
     "dev": "next dev",

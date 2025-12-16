@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://rendafacil.br',
+  siteUrl: process.env.SITE_URL || 'https://rendecerto.com.br',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: ['/privacy', '/terms'],

@@ -26,6 +26,8 @@ export default function SimulationSummary({
       ? Math.pow(1 + rate / 100, 1 / 12) - 1
       : rate / 100;
 
+  // monthlyRate está em decimal (ex: 0.018 para 1.8%)
+  // calculateDoublingTime espera porcentagem (ex: 1.8 para 1.8%)
   const doublingTime = calculateDoublingTime(monthlyRate * 100);
 
   const formatCurrency = (value: number) =>
@@ -206,14 +208,14 @@ export default function SimulationSummary({
         </div>
       )}
 
-      {doublingTime > 0 && doublingTime < 100 && (
+      {/* {doublingTime > 0 && doublingTime < 50 && isFinite(doublingTime) && ( }
         <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
           <p className="text-sm text-yellow-800 dark:text-yellow-200">
             💡 <strong>Dica:</strong> Com essa taxa, o investimento dobra em aproximadamente{' '}
             <strong>{doublingTime.toFixed(1)} anos</strong>.
           </p>
         </div>
-      )}
+      )}*/}
     </motion.div>
   );
 }

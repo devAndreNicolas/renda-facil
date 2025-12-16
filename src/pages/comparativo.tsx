@@ -29,9 +29,9 @@ export default function Comparativo() {
   return (
     <>
       <NextSeo
-        title="Comparativo de Investimentos - RendaFácil"
+        title="Comparativo de Investimentos - RendeCerto"
         description="Compare diferentes simulações de investimentos lado a lado. Veja qual investimento oferece melhor rentabilidade."
-        canonical="https://rendafacil.br/comparativo"
+        canonical="https://rendecerto.com.br/comparativo"
       />
 
       <div className="max-w-7xl mx-auto">

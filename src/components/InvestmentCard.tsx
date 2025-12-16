@@ -30,7 +30,7 @@ export default function InvestmentCard({ investment }: InvestmentCardProps) {
       </p>
 
       <Link
-        href={`/simulador?type=${investment.id}`}
+        href={`/simulador/${investment.id.toLowerCase() === 'tesouro_ipca' ? 'tesouro-ipca' : investment.id.toLowerCase()}`}
         className="btn-primary w-full text-center block"
       >
         Simular Agora

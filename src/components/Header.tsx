@@ -9,7 +9,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('rendafacil_darkmode');
+    const saved = localStorage.getItem('rendecerto_darkmode');
     const isDark = saved === 'true' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
     setDarkMode(isDark);
     if (isDark) {
@@ -20,7 +20,7 @@ export default function Header() {
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
-    localStorage.setItem('rendafacil_darkmode', String(newMode));
+    localStorage.setItem('rendecerto_darkmode', String(newMode));
     if (newMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -41,6 +41,7 @@ export default function Header() {
     { href: '/simulador', label: 'Simulador' },
     { href: '/comparativo', label: 'Comparativo' },
     { href: '/glossary', label: 'Glossário' },
+    { href: '/livros', label: 'Livros' },
   ];
 
   return (
@@ -49,7 +50,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center -mr-28 space-x-2">
             <span className="flex gap-2 justify-center items-center text-2xl font-bold text-primary-600 dark:text-primary-400">
-              <img src="/icon.png" alt="RendaFácil" className="w-10 h-10" /> RendaFácil
+              <img src="/icon.png" alt="RendeCerto" className="w-10 h-10" /> RendeCerto
             </span>
           </Link>
 

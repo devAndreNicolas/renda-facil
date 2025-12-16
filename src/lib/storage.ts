@@ -18,7 +18,7 @@ export interface SavedSimulation {
   createdAt: string;
 }
 
-const STORAGE_KEY = 'rendafacil_simulations';
+const STORAGE_KEY = 'rendecerto_simulations';
 
 export function saveSimulation(simulation: Omit<SavedSimulation, 'id' | 'createdAt'>): SavedSimulation {
   const saved: SavedSimulation = {

@@ -95,8 +95,6 @@ export function calculateCompoundInterest(
   };
 }
 
-export type TaxRegime = 'current' | 'mp1303';
-
 /**
  * Calcula o rendimento considerando IR e regras específicas do investimento
  */
@@ -107,7 +105,7 @@ export function calculateInvestmentReturn(
   rateType: 'monthly' | 'annual',
   months: number,
   investmentType: InvestmentType,
-  taxRegime: TaxRegime = 'current'
+  dividendYieldAnnual?: number // Para FII: dividend yield anual em %
 ): CalculationResult {
   // Converter taxa para mensal se necessário
   const monthlyRate = rateType === 'annual' ? annualToMonthly(rate) * 100 : rate;
@@ -115,28 +113,15 @@ export function calculateInvestmentReturn(
   // Calcular juros compostos
   const result = calculateCompoundInterest(initialValue, monthlyContribution, monthlyRate, months);
 
-  // Aplicar IR conforme tipo de investimento e regime tributário
+  // Aplicar IR conforme tipo de investimento (regras atuais 2025)
   let profitLiquid = result.profit;
   let irRate = 0;
 
-  if (taxRegime === 'mp1303') {
-    // Regras da MP 1.303 (Proposta 2026)
-    if (investmentType.id === 'LCI' || investmentType.id === 'LCA') {
-      irRate = 0.05; // 5% sobre o lucro
-    } else if (investmentType.id === 'CDB' || investmentType.id === 'TESOURO_IPCA') {
-      irRate = 0.175; // 17,5% fixo
-    } else {
-      // FII e Poupança continuam isentos (por enquanto, na simulação)
-      irRate = 0;
-    }
+  if (investmentType.irType === 'regressivo') {
+    irRate = calculateIRRate(months);
   } else {
-    // Regras Atuais (2025)
-    if (investmentType.irType === 'regressivo') {
-      irRate = calculateIRRate(months);
-    } else {
-      // Isento
-      irRate = 0;
-    }
+    // Isento (FII, LCI, LCA, Poupança)
+    irRate = 0;
   }
 
   if (irRate > 0) {
@@ -144,8 +129,27 @@ export function calculateInvestmentReturn(
     profitLiquid = result.profit - irAmount;
   }
 
-  // Calculate estimated monthly income based on the final value
-  const estimatedMonthlyIncome = result.total * (monthlyRate / 100);
+  // Calculate estimated monthly income
+  let estimatedMonthlyIncome = 0;
+  
+  if (investmentType.id === 'FII') {
+    if (dividendYieldAnnual !== undefined) {
+      // Para FII: calcular proventos mensais baseado no dividend yield anual
+      // Usar capital médio durante o período para cálculo mais preciso
+      const averageCapital = (initialValue + result.total) / 2;
+      // Dividend yield anual dividido por 12 para obter mensal
+      estimatedMonthlyIncome = (averageCapital * dividendYieldAnnual) / 100 / 12;
+    } else {
+      // Se não temos dividend yield separado (simulação salva), usar aproximação
+      // Assumir que ~60% da taxa anual é dividend yield (aproximação conservadora)
+      const estimatedYieldRate = (rate / 100) * 0.6;
+      const averageCapital = (initialValue + result.total) / 2;
+      estimatedMonthlyIncome = (averageCapital * estimatedYieldRate) / 12;
+    }
+  } else {
+    // Para outros investimentos: usar valor final e taxa mensal
+    estimatedMonthlyIncome = result.total * (monthlyRate / 100);
+  }
 
   return {
     ...result,
@@ -156,9 +160,21 @@ export function calculateInvestmentReturn(
 
 /**
  * Calcula em quantos anos o investimento dobra (regra dos 72)
+ * @param monthlyRate - Taxa mensal em porcentagem (ex: 1.5 para 1.5%)
  */
 export function calculateDoublingTime(monthlyRate: number): number {
-  const annualRate = Math.pow(1 + monthlyRate / 100, 12) - 1;
-  return 72 / (annualRate * 100);
+  // monthlyRate já vem em porcentagem (ex: 1.5 para 1.5%)
+  // Converter para decimal e depois para anual
+  const monthlyRateDecimal = monthlyRate / 100;
+  const annualRate = Math.pow(1 + monthlyRateDecimal, 12) - 1;
+  // Regra dos 72: 72 / taxa anual em porcentagem
+  // annualRate está em decimal (ex: 0.2182 para 21.82%)
+  // Precisamos converter para porcentagem: annualRate * 100
+  const annualRatePercent = annualRate * 100;
+  // Evitar divisão por zero ou valores muito pequenos
+  if (annualRatePercent <= 0 || annualRatePercent < 0.1) {
+    return Infinity;
+  }
+  return 72 / annualRatePercent;
 }
 

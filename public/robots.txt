@@ -5,7 +5,7 @@ Disallow: /api/
 Disallow: /admin/
 
 # Host
-Host: https://rendafacil.br
+Host: https://rendecerto.com.br
 
 # Sitemaps
-Sitemap: https://rendafacil.br/sitemap.xml
+Sitemap: https://rendecerto.com.br/sitemap.xml

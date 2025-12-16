@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { investmentTypes, getInvestmentType, InvestmentType } from '@/lib/investments';
-import { monthlyToAnnual, TaxRegime } from '@/lib/calculation';
+import { monthlyToAnnual } from '@/lib/calculation';
 import { getTaxasComCache } from '@/lib/taxas';
 
 import HelpFindingRates from './HelpFindingRates';
@@ -17,17 +17,15 @@ interface SimulationFormData {
   rateType: 'monthly' | 'annual';
   period: number;
   periodType: 'months' | 'years';
-  taxRegime: TaxRegime;
 }
 
 interface SimulationFormProps {
-  onSubmit: (data: SimulationFormData) => void;
+  onSubmit: (data: SimulationFormData, dividendYield?: number) => void;
   defaultValues?: Partial<SimulationFormData>;
 }
 
 export default function SimulationForm({ onSubmit, defaultValues }: SimulationFormProps) {
   const [useCustomRate, setUseCustomRate] = useState(false);
-  const [taxRegime, setTaxRegime] = useState<TaxRegime>('current');
   const [isSimpleMode, setIsSimpleMode] = useState(false);
 
   // Manual Input States
@@ -35,7 +33,7 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
   const [sharePrice, setSharePrice] = useState(100);
   const [currentShares, setCurrentShares] = useState(10);
   const [monthlyShares, setMonthlyShares] = useState(5);
-  const [dividendYield, setDividendYield] = useState(0.8); // % a.m.
+  const [dividendYield, setDividendYield] = useState(10.0); // % a.a.
   const [appreciationRate, setAppreciationRate] = useState(5.0); // % a.a.
 
   // Fixed Income
@@ -112,13 +110,34 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
       const calculatedInitial = currentShares * sharePrice;
       const calculatedMonthly = monthlyShares * sharePrice;
 
-      // Rate approximation: Annualized Yield + Appreciation
-      const annualizedYield = monthlyToAnnual(dividendYield);
-      const totalRate = annualizedYield + appreciationRate;
+      // Para FII: 
+      // - Dividend Yield está em % a.a. (rendimento anual dos proventos)
+      // - Valorização está em % a.a. (crescimento do preço da cota)
+      // 
+      // Cálculo correto: precisamos combinar dividend yield e valorização
+      // Dividend yield mensal = (1 + dividendYield/100)^(1/12) - 1
+      // Valorização mensal = (1 + appreciationRate/100)^(1/12) - 1
+      // Taxa mensal total = dividend yield mensal + valorização mensal
+      // Taxa anual total = (1 + taxa mensal total)^12 - 1
+      //
+      // Aproximação mais simples e realista:
+      // Taxa anual efetiva ≈ dividend yield + valorização (para valores pequenos)
+      // Para valores maiores, usamos fórmula composta
+      const dividendYieldDecimal = dividendYield / 100;
+      const appreciationDecimal = appreciationRate / 100;
+      
+      // Taxa mensal de dividend yield (aproximação)
+      const monthlyDividendYield = dividendYieldDecimal / 12;
+      // Taxa mensal de valorização (composta)
+      const monthlyAppreciation = Math.pow(1 + appreciationDecimal, 1/12) - 1;
+      // Taxa mensal total
+      const monthlyRateTotal = monthlyDividendYield + monthlyAppreciation;
+      // Taxa anual equivalente
+      const annualRateTotal = (Math.pow(1 + monthlyRateTotal, 12) - 1) * 100;
 
       setValue('initial', calculatedInitial);
       setValue('monthly', calculatedMonthly);
-      setValue('rate', Math.round(totalRate * 100) / 100);
+      setValue('rate', Math.round(annualRateTotal * 100) / 100);
     }
   }, [investmentType, sharePrice, currentShares, monthlyShares, dividendYield, appreciationRate, setValue]);
 
@@ -139,16 +158,18 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
   }, [investmentType, ipcaRate, realRate, setValue]);
 
   const onFormSubmit = (data: SimulationFormData) => {
-    onSubmit({ ...data, taxRegime });
+    // Se for FII, passar o dividend yield separado
+    const dividendYieldToPass = investmentType?.hasShareInputs ? dividendYield : undefined;
+    onSubmit(data, dividendYieldToPass);
   };
 
 
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
-      {/* Settings Toggles */}
-      <div className="flex flex-col sm:flex-row justify-between gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center justify-between sm:justify-start gap-2">
+      {/* Settings Toggle */}
+      <div className="flex items-center justify-between gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Modo:</span>
           <button
             type="button"
@@ -163,39 +184,7 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
           </button>
           <span className="text-xs text-gray-500">{isSimpleMode ? 'Simples' : 'Avançado'}</span>
         </div>
-
-        <div className="flex items-center justify-between sm:justify-start gap-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Regra IR:</span>
-          <div className="flex bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
-            <button
-              type="button"
-              onClick={() => setTaxRegime('current')}
-              className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${taxRegime === 'current'
-                ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                }`}
-            >
-              Atual (2025)
-            </button>
-            <button
-              type="button"
-              onClick={() => setTaxRegime('mp1303')}
-              className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${taxRegime === 'mp1303'
-                ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow'
-                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
-                }`}
-            >
-              MP 1.303 (2026+)
-            </button>
-          </div>
-        </div>
       </div>
-
-      {taxRegime === 'mp1303' && (
-        <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded text-xs text-blue-800 dark:text-blue-200">
-          ℹ️ <strong>Cenário MP 1.303:</strong> LCI/LCA com 5% de IR e Renda Fixa (CDB/Tesouro) com alíquota única de 17,5%.
-        </div>
-      )}
 
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -228,7 +217,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
               <input
                 type="number"
                 value={sharePrice}
-                onChange={(e) => setSharePrice(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setSharePrice(val >= 0 ? val : 0);
+                }}
+                onFocus={(e) => e.target.select()}
                 className="input-field"
                 min="0"
                 step="0.01"
@@ -243,7 +236,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
               <input
                 type="number"
                 value={dividendYield}
-                onChange={(e) => setDividendYield(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setDividendYield(val >= 0 ? val : 0);
+                }}
+                onFocus={(e) => e.target.select()}
                 className="input-field"
                 min="0"
                 step="0.01"
@@ -258,7 +255,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
               <input
                 type="number"
                 value={appreciationRate}
-                onChange={(e) => setAppreciationRate(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setAppreciationRate(val >= 0 ? val : 0);
+                }}
+                onFocus={(e) => e.target.select()}
                 className="input-field"
                 min="0"
                 step="0.1"
@@ -271,7 +272,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
               <input
                 type="number"
                 value={currentShares}
-                onChange={(e) => setCurrentShares(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setCurrentShares(val >= 0 ? Math.floor(val) : 0);
+                }}
+                onFocus={(e) => e.target.select()}
                 className="input-field"
                 min="0"
                 step="1"
@@ -287,7 +292,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
               <input
                 type="number"
                 value={monthlyShares}
-                onChange={(e) => setMonthlyShares(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setMonthlyShares(val >= 0 ? Math.floor(val) : 0);
+                }}
+                onFocus={(e) => e.target.select()}
                 className="input-field"
                 min="0"
                 step="1"
@@ -323,6 +332,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                 className="input-field w-32"
                 min="0"
                 step="100"
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setValue('initial', val >= 0 ? val : 0);
+                }}
               />
             </div>
             {errors.initial && (
@@ -352,6 +366,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                 className="input-field w-32"
                 min="0"
                 step="50"
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => {
+                  const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                  setValue('monthly', val >= 0 ? val : 0);
+                }}
               />
             </div>
             {errors.monthly && (
@@ -377,7 +396,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                   <input
                     type="number"
                     value={cdiRate}
-                    onChange={(e) => setCdiRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                      setCdiRate(val >= 0 ? val : 0);
+                    }}
+                    onFocus={(e) => e.target.select()}
                     className="input-field"
                     min="0"
                     step="0.1"
@@ -392,7 +415,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                   <input
                     type="number"
                     value={cdiPercent}
-                    onChange={(e) => setCdiPercent(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                      setCdiPercent(val >= 0 ? val : 0);
+                    }}
+                    onFocus={(e) => e.target.select()}
                     className="input-field"
                     min="0"
                     step="1"
@@ -421,7 +448,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                   <input
                     type="number"
                     value={ipcaRate}
-                    onChange={(e) => setIpcaRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                      setIpcaRate(val >= 0 ? val : 0);
+                    }}
+                    onFocus={(e) => e.target.select()}
                     className="input-field"
                     min="0"
                     step="0.1"
@@ -436,7 +467,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                   <input
                     type="number"
                     value={realRate}
-                    onChange={(e) => setRealRate(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                      setRealRate(val >= 0 ? val : 0);
+                    }}
+                    onFocus={(e) => e.target.select()}
                     className="input-field"
                     min="0"
                     step="0.1"
@@ -462,7 +497,14 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
             ) : investmentType?.hasShareInputs ? (
               <div className="col-span-full">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Taxa Efetiva Estimada (Yield + Valorização): <strong className="text-primary-600">{watch('rate').toFixed(2)}% a.a.</strong>
+                  <strong className="text-primary-600">Taxa Potencial Máxima Teórica:</strong> {watch('rate').toFixed(2)}% a.a.
+                  <br />
+                  <span className="text-xs text-gray-500">
+                    (Dividend Yield: {dividendYield.toFixed(2)}% a.a. + Valorização: {appreciationRate.toFixed(2)}% a.a.)
+                  </span>
+                </p>
+                <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+                  ℹ️ <strong>Nota:</strong> A rentabilidade real depende do tempo investido, aportes mensais e variações do mercado.
                 </p>
                 <p className="text-xs text-orange-600 mt-1">⚠️ Renda Variável: O valor das cotas pode oscilar.</p>
               </div>
@@ -505,7 +547,12 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                     })}
                     className="input-field w-32"
                     step="0.1"
-                    onChange={() => setUseCustomRate(true)}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => {
+                      const val = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 0;
+                      setValue('rate', val >= 0 ? val : 0);
+                      setUseCustomRate(true);
+                    }}
                   />
                 </div>
               </div>
@@ -546,6 +593,11 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
             className="input-field w-32"
             min="1"
             step="1"
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => {
+              const val = e.target.value === '' ? 1 : parseFloat(e.target.value.replace(/^0+(?=\d)/, '')) || 1;
+              setValue('period', val >= 1 ? Math.floor(val) : 1);
+            }}
           />
         </div>
         <div className="flex items-center space-x-4 mt-2">

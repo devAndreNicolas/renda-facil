@@ -1,31 +1,31 @@
 import { DefaultSeoProps } from 'next-seo';
 
 const config: DefaultSeoProps = {
-  defaultTitle: 'RendaFácil - Simulador de Rendimentos de Investimentos',
-  titleTemplate: '%s | RendaFácil',
+  defaultTitle: 'RendeCerto - Simulador de Rendimentos de Investimentos',
+  titleTemplate: '%s | RendeCerto',
   description:
     'Simule rendimentos de FII, LCI, LCA, Tesouro IPCA+, CDB e mais. Calcule quanto seu dinheiro pode render com juros compostos.',
-  canonical: 'https://rendafacil.br',
+  canonical: 'https://rendecerto.com.br',
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://rendafacil.br',
-    siteName: 'RendaFácil',
-    title: 'RendaFácil - Simulador de Rendimentos de Investimentos',
+    url: 'https://rendecerto.com.br',
+    siteName: 'RendeCerto',
+    title: 'RendeCerto - Simulador de Rendimentos de Investimentos',
     description:
       'Simule rendimentos de investimentos de forma simples e clara. Calcule FII, LCI, LCA, CDB e mais.',
     images: [
       {
-        url: 'https://rendafacil.br/og-image.jpg',
+        url: 'https://rendecerto.com.br/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'RendaFácil - Simulador de Rendimentos',
+        alt: 'RendeCerto - Simulador de Rendimentos',
       },
     ],
   },
   twitter: {
-    handle: '@rendafacil',
-    site: '@rendafacil',
+    handle: '@rendecerto',
+    site: '@rendecerto',
     cardType: 'summary_large_image',
   },
   additionalMetaTags: [
@@ -36,7 +36,7 @@ const config: DefaultSeoProps = {
     },
     {
       name: 'author',
-      content: 'RendaFácil',
+      content: 'RendeCerto',
     },
     {
       name: 'viewport',

@@ -132,13 +132,13 @@ export default function PostPage({ post }: { post: Post }) {
   return (
     <>
       <NextSeo
-        title={`${post.title} - RendaFácil`}
+        title={`${post.title} - RendeCerto`}
         description={post.description}
-        canonical={`https://rendafacil.br/posts/${post.slug}`}
+        canonical={`https://rendecerto.com.br/posts/${post.slug}`}
         openGraph={{
           title: post.title,
           description: post.description,
-          url: `https://rendafacil.br/posts/${post.slug}`,
+          url: `https://rendecerto.com.br/posts/${post.slug}`,
         }}
       />
 
