@@ -77,7 +77,7 @@ export default function Livros() {
                     <img
                       src={book.imageUrl}
                       alt={book.title}
-                      className="w-full h-64 object-cover rounded-lg mb-4"
+                      className="w-full h-96 object-cover rounded-lg mb-4"
                     />
                   )}
                   <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">

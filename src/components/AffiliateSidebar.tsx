@@ -26,7 +26,7 @@ export default function AffiliateSidebar({
       ))}
 
       {/* Google AdSense Sidebar */}
-      {adSenseConfig.enabled && adSenseConfig.positions.sidebar && (
+      {adSenseConfig.enabled && adSenseConfig.slots.sidebar && (
         <div className="sticky top-24">
           <AdSlot position="sidebar" />
         </div>

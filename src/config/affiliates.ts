@@ -81,27 +81,67 @@ export const affiliateLinks: AffiliateLink[] = [
 // ============================================
 
 export const bookLinks: BookLink[] = [
-  // Adicione seus livros aqui quando tiver os links
-  // Exemplo:
-  // {
-  //   id: 'livro-exemplo',
-  //   title: 'Título do Livro',
-  //   author: 'Nome do Autor',
-  //   description: 'Descrição do livro sobre investimentos',
-  //   url: 'https://amazon.com.br/dp/...?tag=seu-tag',
-  // },
+  {
+    id: 'livro-pai-rico',
+    title: 'Pai Rico, Pai Pobre',
+    author: 'Robert Kiyosaki',
+    description: 'Um dos livros mais famosos sobre educação financeira, que ensina a importância de investir e entender como o dinheiro funciona.',
+    url: 'https://amzn.to/4oZ7Et0', 
+    imageUrl: 'https://m.media-amazon.com/images/I/81bsw6fnUiL.jpg', // capa do livro
+  },
+  {
+    id: 'livro-investidor-inteligente',
+    title: 'O Investidor Inteligente',
+    author: 'Benjamin Graham',
+    description: 'Considerado a bíblia do investimento em valor, este livro é uma leitura obrigatória para investidores a longo prazo.',
+    url: 'https://amzn.to/48HRHCH', 
+    imageUrl: 'https://m.media-amazon.com/images/I/61Q2pK79yWL._SY466_.jpg',
+  },
+  {
+    id: 'livro-educacao-financeira',
+    title: 'O homem mais rico da Babilônia: com prefácio de Thiago Nigro',
+    author: 'Luiz Cavalcanti de M. Guerra (Tradutor), George S. Clason (Autor), Thiago Nigro (Autor, Prefácio)',
+    description: 'Um clássico sobre finanças pessoais que traz lições sobre riqueza e como gerenciar o dinheiro de maneira eficaz.',
+    url: 'https://amzn.to/3MKDjkn', 
+    imageUrl: 'https://m.media-amazon.com/images/I/81V+m3wB2ZL._SY466_.jpg'
+  },
+  {
+    id: 'livro-os-segredos-da-mente-milionaria',
+    title: 'Os Segredos da Mente Milionária',
+    author: 'T. Harv Eker',
+    description: 'Este livro explora como a mentalidade de um milionário pode ser criada e como isso afeta a sua vida financeira.',
+    url: 'https://amzn.to/4alPfTx', 
+    imageUrl: 'https://m.media-amazon.com/images/I/41hqi4rWufL._SY445_SX342_ControlCacheEqualizer_.jpg'
+  },
+  {
+    id: 'livro-investindo-em-acoes-para-leigos',
+    title: 'Investindo em Ações para Leigos',
+    author: 'Paul Mladjenovic',
+    description: 'Este livro oferece um guia prático sobre o mercado de ações, perfeito para iniciantes que querem entender como investir no mercado de ações.',
+    url: 'https://amzn.to/4s61Occ',
+    imageUrl: 'https://m.media-amazon.com/images/I/71NTtyEmI0L._SY425_.jpg',
+  },
+  {
+    id: 'barefoot-investor',
+    title: 'The Barefoot Investor: The Only Money Guide You\'ll Ever Need',
+    author: 'Scott Pape',
+    description: 'Guia completo de finanças pessoais que prepara o leitor para investir com confiança.',
+    url: 'https://amzn.to/3XVJgxp',
+    imageUrl: 'https://m.media-amazon.com/images/I/81MNNaYbJML._SY425_.jpg',
+
+  },
 ];
 
 // Livro em destaque (aparece estrategicamente)
-export const featuredBook: BookLink | null = null;
-// Exemplo quando tiver:
-// {
-//   id: 'livro-destaque',
-//   title: 'Livro em Destaque',
-//   author: 'Autor',
-//   description: 'Este é um dos livros mais recomendados para quem está começando a investir',
-//   url: 'https://amazon.com.br/dp/...?tag=seu-tag',
-// };
+export const featuredBook: BookLink | null = {
+  id: 'livro-destaque',
+  title: 'Pai Rico, Pai Pobre',
+  author: 'Robert Kiyosaki',
+  description: 'Este é um dos livros mais recomendados para quem está começando a investir. Uma leitura essencial para quem quer mudar sua mentalidade sobre finanças.',
+  url: 'https://amzn.to/4pRtG23', 
+  imageUrl: 'https://m.media-amazon.com/images/I/81bsw6fnUiL.jpg',
+};
+
 
 // ============================================
 // CONFIGURAÇÃO DO GOOGLE ADSENSE

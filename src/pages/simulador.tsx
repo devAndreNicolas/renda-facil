@@ -57,7 +57,7 @@ export default function Simulador() {
         )}
 
         {/* AdSense Banner */}
-        {adSenseConfig.enabled && adSenseConfig.positions.banner && (
+        {adSenseConfig.enabled && adSenseConfig.slots.banner && (
           <AdSlot position="banner" className="my-8" />
         )}
 
