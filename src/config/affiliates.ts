@@ -37,11 +37,11 @@ export interface BookLink {
 export interface AdSenseConfig {
   clientId: string;
   enabled: boolean;
-  positions: {
-    banner: boolean;
-    sidebar: boolean;
-    inArticle: boolean;
-    afterResults: boolean;
+  slots: {
+    banner: string;
+    sidebar: string;
+    inArticle: string;
+    afterResults: string;
   };
 }
 
@@ -108,13 +108,13 @@ export const featuredBook: BookLink | null = null;
 // ============================================
 
 export const adSenseConfig: AdSenseConfig = {
-  clientId: 'ca-pub-7500876609185925', // Substitua pelo seu ID do AdSense
-  enabled: true,
-  positions: {
-    banner: true,
-    sidebar: true,
-    inArticle: true,
-    afterResults: true,
+  clientId: 'ca-pub-7500876609185925',
+  enabled: false,
+  slots: {
+    banner: '7255915663',
+    sidebar: '8707957503',
+    inArticle: '7239797316',
+    afterResults: '2434193199',
   },
 };
 

@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import SEO from '../../next-seo.config';
+import { adSenseConfig } from '@/config/affiliates';
 import '@/styles/globals.css';
 import '@/styles/theme.css';
 import Header from '@/components/Header';
@@ -14,12 +15,16 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon.svg" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7500876609185925"
-          crossOrigin="anonymous"
-        />
+        <meta name="google-adsense-account" content="ca-pub-7500876609185925" />
+        {adSenseConfig.enabled && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseConfig.clientId}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </Head>
+
       <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
         <Header />
         <main className="flex-grow container mx-auto px-3 md:px-4 py-4 md:py-8">

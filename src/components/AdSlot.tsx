@@ -4,71 +4,35 @@ import { useEffect } from 'react';
 import { adSenseConfig } from '@/config/affiliates';
 
 interface AdSlotProps {
-  position: 'banner' | 'in-article' | 'sidebar';
+  position: 'banner' | 'sidebar' | 'inArticle' | 'afterResults';
   className?: string;
 }
 
 export default function AdSlot({ position, className = '' }: AdSlotProps) {
-  // Verifica se AdSense está habilitado e se a posição está ativa
-  const isEnabled = adSenseConfig.enabled && (
-    (position === 'banner' && adSenseConfig.positions.banner) ||
-    (position === 'in-article' && adSenseConfig.positions.inArticle) ||
-    (position === 'sidebar' && adSenseConfig.positions.sidebar)
-  );
+  if (!adSenseConfig.enabled) return null;
+
+  const slotId = adSenseConfig.slots[position];
+  if (!slotId) return null;
 
   useEffect(() => {
-    if (!isEnabled) return;
-
-    // Carregar script do AdSense quando o componente montar
-    if (typeof window !== 'undefined' && (window as any).adsbygoogle === undefined) {
-      const script = document.createElement('script');
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseConfig.clientId}`;
-      script.async = true;
-      script.crossOrigin = 'anonymous';
-      document.head.appendChild(script);
-    }
-  }, [isEnabled]);
-
-  useEffect(() => {
-    if (!isEnabled) return;
-
     try {
-      if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-      }
+      // @ts-ignore
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (e) {
-      console.error('Erro ao carregar anúncio:', e);
+      console.error('AdSense error:', e);
     }
-  }, [isEnabled]);
-
-  const getAdStyle = () => {
-    switch (position) {
-      case 'banner':
-        return 'w-full h-32 md:h-24';
-      case 'in-article':
-        return 'w-full h-32 md:h-24 my-8';
-      case 'sidebar':
-        return 'w-full h-96';
-      default:
-        return 'w-full h-32';
-    }
-  };
-
-  if (!isEnabled) {
-    return null;
-  }
+  }, []);
 
   return (
-    <div className={`${getAdStyle()} ${className} flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg`}>
+    <div className={className}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
         data-ad-client={adSenseConfig.clientId}
-        data-ad-slot={`${position}-slot`}
+        data-ad-slot={slotId}
         data-ad-format="auto"
         data-full-width-responsive="true"
       />
     </div>
   );
 }
-
