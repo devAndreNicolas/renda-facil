@@ -149,7 +149,7 @@ export const featuredBook: BookLink | null = {
 
 export const adSenseConfig: AdSenseConfig = {
   clientId: 'ca-pub-7500876609185925',
-  enabled: false,
+  enabled: true,
   slots: {
     banner: '7255915663',
     sidebar: '8707957503',
