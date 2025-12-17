@@ -22,6 +22,7 @@ import {
   getAffiliateLinksForPosition,
   adSenseConfig,
 } from "@/config/affiliates";
+import Link from "next/link";
 
 // Mapeamento de slugs para IDs de investimento
 const investmentSlugMap: Record<string, string> = {
@@ -324,12 +325,12 @@ export default function SimuladorTipo() {
                     </p>
 
                     {/* Botão */}
-                    <a
+                    <Link
                       href="/livros"
                       className="inline-block bg-primary-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-primary-700 transition-colors"
                     >
                       Ver todos os livros →
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

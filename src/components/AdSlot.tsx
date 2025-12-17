@@ -9,19 +9,21 @@ interface AdSlotProps {
 }
 
 export default function AdSlot({ position, className = '' }: AdSlotProps) {
-  if (!adSenseConfig.enabled) return null;
-
   const slotId = adSenseConfig.slots[position];
-  if (!slotId) return null;
 
   useEffect(() => {
+    if (!adSenseConfig.enabled || !slotId) return;
+
     try {
       // @ts-ignore
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (e) {
       console.error('AdSense error:', e);
     }
-  }, []);
+  }, [slotId]);
+
+  // Renderiza apenas se AdSense estiver habilitado e slot existir
+  if (!adSenseConfig.enabled || !slotId) return null;
 
   return (
     <div className={className}>
