@@ -182,7 +182,7 @@ export default function SimulationForm({ onSubmit, defaultValues }: SimulationFo
                 } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
             />
           </button>
-          <span className="text-xs text-gray-500 hidden sm:inline">{isSimpleMode ? 'Simples' : 'Avançado'}</span>
+          <span className="text-xs text-gray-300 hidden sm:inline">{isSimpleMode ? 'Simples' : 'Avançado'}</span>
         </div>
       </div>
 
