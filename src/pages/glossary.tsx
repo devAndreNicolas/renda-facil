@@ -266,7 +266,7 @@ export default function Glossary() {
           ) : (
             <div className="card text-center py-8">
               <p className="text-gray-600 dark:text-gray-400">
-                Nenhum termo encontrado para "{searchTerm}". Tente outra busca.
+                Nenhum termo encontrado para &quot;{searchTerm}&quot;. Tente outra busca.
               </p>
             </div>
           )}

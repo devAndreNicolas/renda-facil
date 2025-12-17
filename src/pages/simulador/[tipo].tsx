@@ -44,7 +44,8 @@ export default function SimuladorTipo() {
     period: number;
     periodType: 'months' | 'years';
   } | null>(null);
-  const [investmentType, setInvestmentType] = useState<ReturnType<typeof getInvestmentType>>(null);
+  const [investmentType, setInvestmentType] =
+  useState<ReturnType<typeof getInvestmentType> | null>(null);
 
   useEffect(() => {
     if (tipo && typeof tipo === 'string') {
