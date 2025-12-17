@@ -1,14 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  output: 'export',
+
   images: {
-    domains: [],
+    unoptimized: true,
   },
-  // Configuração para sitemap
+
   async generateBuildId() {
-    return 'rendecerto-build'
+    return 'rendecerto-build';
   },
-}
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;
