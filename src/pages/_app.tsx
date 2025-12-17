@@ -14,6 +14,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon.svg" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7500876609185925"
+          crossOrigin="anonymous"
+        />
       </Head>
       <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
         <Header />

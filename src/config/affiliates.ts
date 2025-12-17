@@ -108,7 +108,7 @@ export const featuredBook: BookLink | null = null;
 // ============================================
 
 export const adSenseConfig: AdSenseConfig = {
-  clientId: 'ca-pub-XXXXXXXXXX', // Substitua pelo seu ID do AdSense
+  clientId: 'ca-pub-7500876609185925', // Substitua pelo seu ID do AdSense
   enabled: true,
   positions: {
     banner: true,
