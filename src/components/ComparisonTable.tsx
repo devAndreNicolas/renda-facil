@@ -91,6 +91,11 @@ export default function ComparisonTable({ simulations }: ComparisonTableProps) {
     },
   };
 
+  // Find the best investment (highest profit liquid)
+  const bestSimulation = simulations.reduce((best, current) =>
+    current.result.profitLiquid > best.result.profitLiquid ? current : best
+    , simulations[0]);
+
   return (
     <div className="space-y-6">
       <div className="card overflow-x-auto">
@@ -116,14 +121,16 @@ export default function ComparisonTable({ simulations }: ComparisonTableProps) {
               return (
                 <tr
                   key={sim.id}
-                  className={`border-b border-gray-200 dark:border-gray-700 ${
-                    index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-800/50' : ''
-                  }`}
+                  className={`border-b border-gray-200 dark:border-gray-700 ${index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-800/50' : ''
+                    }`}
                 >
                   <td className="py-3 px-4">
                     <div className="flex items-center space-x-2">
                       <span className="text-xl">{type?.icon}</span>
                       <span className="font-medium text-gray-900 dark:text-gray-100">{type?.name}</span>
+                      {sim.id === bestSimulation.id && (
+                        <span className="text-xl" title="Melhor investimento">🏆</span>
+                      )}
                     </div>
                   </td>
                   <td className="text-right py-3 px-4 text-gray-700 dark:text-gray-300">

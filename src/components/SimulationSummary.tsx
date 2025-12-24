@@ -61,18 +61,23 @@ export default function SimulationSummary({
         <div className="mb-2 md:mb-3">
           <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
             {isFII
-              ? '📌 1. Quanto devo receber por mês de proventos?'
-              : '📌 1. Se eu deixar esse dinheiro aplicado depois disso, quanto rende por mês?'}
+              ? '📌 1. Quanto devo receber de proventos por mês (estimativa)?'
+              : '📌 1. Se eu parar de aportar, quanto esse valor rende por mês?'}
           </p>
           <p className="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             {formatCurrency(rendimentoMensalFuturo)}
           </p>
+          {isFII && (
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              💡 Proventos de FIIs variam mensalmente. Este é um valor médio estimado.
+            </p>
+          )}
         </div>
 
         {/* 2. Lucro líquido */}
         <div className="mb-2 md:mb-3">
           <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
-            📌 2. Quanto eu ganhei neste período simulando aportes?
+            📌 2. Qual foi meu lucro líquido total (já descontado o IR)?
           </p>
           <p className="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             {formatCurrency(result.profitLiquid)}
@@ -82,12 +87,19 @@ export default function SimulationSummary({
         {/* 3. Rentabilidade total */}
         <div>
           <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
-            📌 3. Isso deu quanto de rentabilidade?
+            📌 3. Qual foi minha rentabilidade percentual total?
           </p>
           <p className="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             {((result.profitLiquid / result.totalInvested) * 100).toFixed(2)}%
           </p>
         </div>
+      </div>
+
+      {/* -------- DISCLAIMER VISÍVEL -------- */}
+      <div className="mb-4 md:mb-6 p-3 md:p-4 rounded-lg border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/20">
+        <p className="text-xs md:text-sm text-yellow-800 dark:text-yellow-200">
+          ⚠️ <strong>Importante:</strong> Estes valores são estimativas baseadas em cálculos matemáticos. Rentabilidades reais podem variar devido a taxas, impostos adicionais e condições de mercado. Não garantimos resultados futuros. Consulte um profissional antes de investir.
+        </p>
       </div>
 
       {/* -------- BLOCO PRINCIPAL -------- */}
@@ -162,26 +174,8 @@ export default function SimulationSummary({
 
       {/* -------- RENDIMENTO MÉDIO -------- */}
       <div className="border-t border-gray-200 dark:border-gray-700 pt-3 md:pt-4">
-        <div className="flex items-center justify-between text-xs md:text-sm mb-1.5 md:mb-2">
-          <span className="text-gray-600 dark:text-gray-400">
-            Lucro Médio Mensal (na simulação):
-          </span>
-          <span className="font-semibold text-gray-900 dark:text-gray-100">
-            {formatCurrency(lucroMedioMensal)}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between text-xs md:text-sm mb-1.5 md:mb-2">
-          <span className="text-gray-600 dark:text-gray-400">
-            Lucro Médio por Ano:
-          </span>
-          <span className="font-semibold text-gray-900 dark:text-gray-100">
-            {formatCurrency(lucroMedioMensal * 12)}
-          </span>
-        </div>
-
         {type && type.irType === 'regressivo' && (
-          <div className="flex items-center justify-between text-xs md:text-sm">
+          <div className="flex items-center justify-between text-xs md:text-sm mb-1.5 md:mb-2">
             <span className="text-gray-600 dark:text-gray-400">
               IR Descontado:
             </span>

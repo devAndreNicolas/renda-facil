@@ -50,6 +50,29 @@ export default function Comparativo() {
           </div>
         ) : (
           <>
+            {/* Onboarding Banner */}
+            {allSimulations.length < 2 && (
+              <div className="card bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="text-3xl flex-shrink-0">🎯</div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-yellow-900 dark:text-yellow-100 mb-2 text-lg">
+                      Como usar o Comparativo
+                    </h3>
+                    <ol className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1 mb-4">
+                      <li>1️⃣ Crie pelo menos 2 simulações diferentes</li>
+                      <li>2️⃣ Salve cada simulação clicando em "💾 Salvar Simulação"</li>
+                      <li>3️⃣ Volte aqui para comparar lado a lado</li>
+                      <li>4️⃣ Descubra qual investimento oferece melhor retorno 🏆</li>
+                    </ol>
+                    <Link href="/simulador" className="btn-primary inline-block">
+                      Criar Simulação →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="mb-8">
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Selecione até 3 simulações para comparar. Clique em &quot;Selecionar&quot; para adicionar ou remover.
@@ -60,11 +83,10 @@ export default function Comparativo() {
                   return (
                     <div
                       key={sim.id}
-                      className={`card cursor-pointer transition-all ${
-                        isSelected
+                      className={`card cursor-pointer transition-all ${isSelected
                           ? 'ring-2 ring-primary-500 bg-primary-50 dark:bg-primary-900/20'
                           : 'hover:shadow-lg'
-                      }`}
+                        }`}
                       onClick={() => handleSelectSimulation(sim)}
                     >
                       <div className="flex items-center justify-between mb-2">

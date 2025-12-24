@@ -170,9 +170,8 @@ export default function SimuladorTipo() {
 
   // SEO específico para o tipo de investimento
   const seoTitle = `Simulador de ${investmentType.name} - Calcule Rendimentos | RendeCerto`;
-  const seoDescription = `Simule rendimentos de ${investmentType.name.toLowerCase()}. ${
-    investmentType.description
-  } Calcule quanto seu dinheiro pode render com juros compostos.`;
+  const seoDescription = `Simule rendimentos de ${investmentType.name.toLowerCase()}. ${investmentType.description
+    } Calcule quanto seu dinheiro pode render com juros compostos.`;
   const canonicalUrl = `https://rendecerto.com.br/simulador/${tipo}`;
 
   // Banners estratégicos
@@ -254,12 +253,24 @@ export default function SimuladorTipo() {
                     rate={currentRate}
                     rateType={currentRateType}
                   />
-                  <button
-                    onClick={handleSave}
-                    className="btn-secondary w-full mt-3 md:mt-4 text-sm md:text-base py-2 md:py-3"
-                  >
-                    💾 Salvar Simulação
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-2 mt-3 md:mt-4">
+                    <button
+                      onClick={handleSave}
+                      className="btn-secondary flex-1 text-sm md:text-base py-2 md:py-3"
+                      title="Salve para comparar com outras simulações depois"
+                    >
+                      💾 Salvar Simulação
+                    </button>
+                    <Link
+                      href="/comparativo"
+                      className="btn-primary flex-1 text-center text-sm md:text-base py-2 md:py-3"
+                    >
+                      📊 Comparar Investimentos
+                    </Link>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
+                    💡 Salve várias simulações e compare lado a lado
+                  </p>
                 </div>
 
                 {/* Gráfico */}
@@ -289,14 +300,37 @@ export default function SimuladorTipo() {
                 )}
               </>
             ) : (
-              <div className="card text-center py-6 md:py-12 bg-gray-50 dark:bg-gray-800/50">
-                <div className="text-4xl md:text-6xl mb-2 md:mb-4">📊</div>
-                <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 md:mb-2">
-                  Preencha o formulário
-                </h3>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 px-2">
-                  Configure os parâmetros e veja os resultados aqui
-                </p>
+              <div className="space-y-4">
+                <div className="card text-center py-6 md:py-12 bg-gray-50 dark:bg-gray-800/50">
+                  <div className="text-4xl md:text-6xl mb-2 md:mb-4">📊</div>
+                  <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1 md:mb-2">
+                    Preencha o formulário
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 px-2">
+                    Configure os parâmetros e veja os resultados aqui
+                  </p>
+                </div>
+
+                {/* Banner do Comparativo */}
+                <div className="card bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl md:text-3xl flex-shrink-0">💡</div>
+                    <div className="flex-1">
+                      <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-1 text-sm md:text-base">
+                        Sabia que você pode comparar investimentos?
+                      </h4>
+                      <p className="text-xs md:text-sm text-blue-700 dark:text-blue-300 mb-3">
+                        Salve múltiplas simulações e compare lado a lado para ver qual investimento oferece melhor retorno.
+                      </p>
+                      <Link
+                        href="/comparativo"
+                        className="inline-block text-xs md:text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+                      >
+                        Ver Comparativo →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

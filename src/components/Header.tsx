@@ -42,25 +42,28 @@ export default function Header() {
     { href: '/comparativo', label: 'Comparativo' },
     { href: '/glossary', label: 'Glossário' },
     { href: '/livros', label: 'Livros' },
+    { href: '/sobre', label: 'Sobre' },
+    { href: '/contato', label: 'Contato' },
   ];
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center -mr-28 space-x-2">
-            <span className="flex gap-2 justify-center items-center text-2xl font-bold text-primary-600 dark:text-primary-400">
-              <img src="/icon.png" alt="RendeCerto" className="w-10 h-10" /> RendeCerto
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
+            <span className="flex gap-2 justify-center items-center text-xl md:text-2xl font-bold text-primary-600 dark:text-primary-400">
+              <img src="/icon.png" alt="RendeCerto" className="w-8 h-8 md:w-10 md:h-10" />
+              <span className="hidden sm:inline">RendeCerto</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-sm lg:text-base whitespace-nowrap"
               >
                 {link.label}
               </Link>
