@@ -61,7 +61,7 @@ export default function Comparativo() {
                     </h3>
                     <ol className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1 mb-4">
                       <li>1️⃣ Crie pelo menos 2 simulações diferentes</li>
-                      <li>2️⃣ Salve cada simulação clicando em "💾 Salvar Simulação"</li>
+                      <li>2️⃣ Salve cada simulação clicando em &quot;💾 Salvar Simulação&quot;</li>
                       <li>3️⃣ Volte aqui para comparar lado a lado</li>
                       <li>4️⃣ Descubra qual investimento oferece melhor retorno 🏆</li>
                     </ol>
@@ -84,8 +84,8 @@ export default function Comparativo() {
                     <div
                       key={sim.id}
                       className={`card cursor-pointer transition-all ${isSelected
-                          ? 'ring-2 ring-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                          : 'hover:shadow-lg'
+                        ? 'ring-2 ring-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                        : 'hover:shadow-lg'
                         }`}
                       onClick={() => handleSelectSimulation(sim)}
                     >
